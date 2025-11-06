@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 
 	"github.com/aldehir/S1000D/pkg/datamodule"
+	"github.com/aldehir/S1000D/pkg/markdown"
 	"github.com/aldehir/S1000D/pkg/pubmodule"
 )
 
@@ -48,6 +49,51 @@ func main() {
 	} else {
 		printPublicationModuleInfo(pm)
 	}
+
+	// Render to Markdown
+	fmt.Println("\n4. Rendering to Markdown")
+	fmt.Println("-------------------------")
+
+	// Create markdown renderer
+	opts := &markdown.RendererOptions{
+		OutputDir:     "markdown_output",
+		LinkExtension: ".md",
+	}
+	renderer := markdown.NewRenderer(opts)
+
+	// Render data modules
+	if dmDesc != nil {
+		mdPath, err := renderer.RenderDataModule(dmDesc)
+		if err != nil {
+			log.Printf("Warning: Could not render descriptive DM: %v\n", err)
+		} else {
+			fmt.Printf("  Rendered descriptive DM to: %s\n", mdPath)
+		}
+	}
+
+	if dmProc != nil {
+		mdPath, err := renderer.RenderDataModule(dmProc)
+		if err != nil {
+			log.Printf("Warning: Could not render procedural DM: %v\n", err)
+		} else {
+			fmt.Printf("  Rendered procedural DM to: %s\n", mdPath)
+		}
+	}
+
+	// Render publication module
+	if pm != nil {
+		files, err := renderer.RenderPublicationModule(pm)
+		if err != nil {
+			log.Printf("Warning: Could not render PM: %v\n", err)
+		} else {
+			fmt.Printf("  Rendered publication module:\n")
+			for filename, path := range files {
+				fmt.Printf("    %s -> %s\n", filename, path)
+			}
+		}
+	}
+
+	fmt.Println("\n✓ All markdown files have been generated in the 'markdown_output' directory")
 }
 
 func printDataModuleInfo(dm *datamodule.DataModule) {

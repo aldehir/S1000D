@@ -1,0 +1,27 @@
+# Markdown renderer output
+examples/markdown_output/
+
+# Test output
+*_output/
+output/
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
