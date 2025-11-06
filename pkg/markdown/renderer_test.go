@@ -306,6 +306,10 @@ func TestRendererWithDefaultOptions(t *testing.T) {
 	if renderer.options.LinkExtension != ".md" {
 		t.Errorf("Default LinkExtension = %s, expected '.md'", renderer.options.LinkExtension)
 	}
+
+	if renderer.options.LinkFormat != "relative" {
+		t.Errorf("Default LinkFormat = %s, expected 'relative'", renderer.options.LinkFormat)
+	}
 }
 
 func TestFileCreation(t *testing.T) {
@@ -378,5 +382,106 @@ func TestNestedDirectoryCreation(t *testing.T) {
 	// Verify the directory was created
 	if _, err := os.Stat(nestedDir); os.IsNotExist(err) {
 		t.Errorf("Directory was not created: %s", nestedDir)
+	}
+}
+
+func TestLinkFormatURIScheme(t *testing.T) {
+	// Parse the example publication module
+	pm, err := pubmodule.ParseFile("../../examples/example_pubmodule.xml")
+	if err != nil {
+		t.Fatalf("Failed to parse publication module: %v", err)
+	}
+
+	// Create a temporary directory for output
+	tmpDir := t.TempDir()
+
+	// Create renderer with URI scheme link format
+	opts := &RendererOptions{
+		OutputDir:  tmpDir,
+		LinkFormat: "s1000d://dmc/",
+	}
+	renderer := NewRenderer(opts)
+
+	// Render the publication module
+	files, err := renderer.RenderPublicationModule(pm)
+	if err != nil {
+		t.Fatalf("Failed to render publication module: %v", err)
+	}
+
+	// Get the main publication file
+	var pmFilepath string
+	for _, path := range files {
+		pmFilepath = path
+		break
+	}
+
+	// Read the generated file
+	content, err := os.ReadFile(pmFilepath)
+	if err != nil {
+		t.Fatalf("Failed to read generated file: %v", err)
+	}
+
+	contentStr := string(content)
+
+	// Verify links use URI scheme format
+	if !strings.Contains(contentStr, "[MYAIRCRAFT-A-00-00-00-00A-040A-D](s1000d://dmc/MYAIRCRAFT-A-00-00-00-00A-040A-D)") {
+		t.Error("Expected URI scheme link to first data module not found")
+	}
+
+	if !strings.Contains(contentStr, "[MYAIRCRAFT-A-72-10-00-00A-520A-C](s1000d://dmc/MYAIRCRAFT-A-72-10-00-00A-520A-C)") {
+		t.Error("Expected URI scheme link to second data module not found")
+	}
+
+	// Verify relative links are NOT present
+	if strings.Contains(contentStr, "MYAIRCRAFT_A_00_00_00_00A_040A_D.md") {
+		t.Error("Relative link found when URI scheme was expected")
+	}
+}
+
+func TestLinkFormatRelative(t *testing.T) {
+	// Parse the example publication module
+	pm, err := pubmodule.ParseFile("../../examples/example_pubmodule.xml")
+	if err != nil {
+		t.Fatalf("Failed to parse publication module: %v", err)
+	}
+
+	// Create a temporary directory for output
+	tmpDir := t.TempDir()
+
+	// Create renderer with explicit relative link format
+	opts := &RendererOptions{
+		OutputDir:  tmpDir,
+		LinkFormat: "relative",
+	}
+	renderer := NewRenderer(opts)
+
+	// Render the publication module
+	files, err := renderer.RenderPublicationModule(pm)
+	if err != nil {
+		t.Fatalf("Failed to render publication module: %v", err)
+	}
+
+	// Get the main publication file
+	var pmFilepath string
+	for _, path := range files {
+		pmFilepath = path
+		break
+	}
+
+	// Read the generated file
+	content, err := os.ReadFile(pmFilepath)
+	if err != nil {
+		t.Fatalf("Failed to read generated file: %v", err)
+	}
+
+	contentStr := string(content)
+
+	// Verify links use relative format
+	if !strings.Contains(contentStr, "[MYAIRCRAFT-A-00-00-00-00A-040A-D](MYAIRCRAFT_A_00_00_00_00A_040A_D.md)") {
+		t.Error("Expected relative link to first data module not found")
+	}
+
+	if !strings.Contains(contentStr, "[MYAIRCRAFT-A-72-10-00-00A-520A-C](MYAIRCRAFT_A_72_10_00_00A_520A_C.md)") {
+		t.Error("Expected relative link to second data module not found")
 	}
 }
