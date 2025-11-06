@@ -9,6 +9,7 @@ A Go library for parsing S1000D technical publications. S1000D is an internation
 - Support for both descriptive and procedural content
 - Extract data module codes (DMC), publication module codes (PMC), and metadata
 - Type-safe Go structures for S1000D XML elements
+- **Markdown Renderer**: Convert S1000D documents to Markdown format with YAML frontmatter
 
 ## Installation
 
@@ -107,6 +108,116 @@ xmlData := []byte(`<dmodule>...</dmodule>`)
 dm, err := datamodule.ParseBytes(xmlData)
 ```
 
+## Markdown Renderer
+
+The markdown renderer converts parsed S1000D documents into Markdown files with YAML frontmatter for metadata.
+
+### Rendering Data Modules
+
+```go
+package main
+
+import (
+    "log"
+
+    "github.com/aldehir/S1000D/pkg/datamodule"
+    "github.com/aldehir/S1000D/pkg/markdown"
+)
+
+func main() {
+    // Parse a data module
+    dm, err := datamodule.ParseFile("datamodule.xml")
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    // Create markdown renderer
+    opts := &markdown.RendererOptions{
+        OutputDir:     "markdown_output",
+        LinkExtension: ".md",
+    }
+    renderer := markdown.NewRenderer(opts)
+
+    // Render to markdown
+    mdPath, err := renderer.RenderDataModule(dm)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    fmt.Println("Rendered to:", mdPath)
+}
+```
+
+### Rendering Publication Modules
+
+```go
+// Parse a publication module
+pm, err := pubmodule.ParseFile("pubmodule.xml")
+if err != nil {
+    log.Fatal(err)
+}
+
+// Render to markdown
+renderer := markdown.NewRenderer(nil) // Uses default options
+files, err := renderer.RenderPublicationModule(pm)
+if err != nil {
+    log.Fatal(err)
+}
+
+// Print all generated files
+for filename, path := range files {
+    fmt.Printf("%s -> %s\n", filename, path)
+}
+```
+
+### Markdown Output Format
+
+The renderer creates markdown files with:
+
+**YAML Frontmatter** containing:
+- DMC/PMC identifier
+- Title
+- Issue information
+- Language
+- Issue date
+- Security classification
+- Responsible party and originator
+- Data module references (for PMs)
+- Business rule exchange references (if applicable)
+
+**Content** formatted as:
+- Hierarchical headings from levelled paragraphs
+- Numbered lists for procedural steps
+- Links to referenced data modules using relative paths
+
+Example output:
+
+```markdown
+---
+dmc: MYAIRCRAFT-A-00-00-00-00A-040A-D
+title: Engine - Description
+issue: 001-00
+language: en-US
+issue_date: 2024-01-15
+security_classification: 01
+responsible_party: "Aerospace Manufacturing Inc. (12345)"
+---
+
+# Engine - Description
+
+## General
+
+This data module provides a description of the aircraft engine system.
+
+### Engine Components
+
+The engine consists of the following major components:
+
+1. Compressor section
+2. Combustion chamber
+...
+```
+
 ## Project Structure
 
 ```
@@ -114,8 +225,10 @@ S1000D/
 ├── pkg/
 │   ├── common/          # Common structures (DMC, PMC, identifiers)
 │   ├── datamodule/      # Data Module parser and structures
-│   └── pubmodule/       # Publication Module parser and structures
-├── examples/            # Example S1000D XML files
+│   ├── pubmodule/       # Publication Module parser and structures
+│   └── markdown/        # Markdown renderer for S1000D documents
+├── examples/            # Example S1000D XML files and usage
+│   ├── main.go
 │   ├── example_datamodule.xml
 │   ├── example_procedure.xml
 │   └── example_pubmodule.xml
