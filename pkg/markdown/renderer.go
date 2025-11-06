@@ -17,6 +17,10 @@ type RendererOptions struct {
 	OutputDir string
 	// LinkExtension is the extension to use for links (default: .md)
 	LinkExtension string
+	// LinkFormat controls how links are formatted:
+	//   - "relative" or empty: use relative file paths (default)
+	//   - URI scheme (e.g., "s1000d://dmc/"): use absolute URI references
+	LinkFormat string
 }
 
 // DefaultOptions returns the default renderer options
@@ -24,6 +28,7 @@ func DefaultOptions() *RendererOptions {
 	return &RendererOptions{
 		OutputDir:     "output",
 		LinkExtension: ".md",
+		LinkFormat:    "relative",
 	}
 }
 
@@ -289,8 +294,14 @@ func (r *Renderer) pmcToFilename(pmc string) string {
 
 // dmcToLink converts a DMC string to a markdown link
 func (r *Renderer) dmcToLink(dmc string) string {
-	filename := r.dmcToFilename(dmc)
-	return filename
+	// If LinkFormat is empty or "relative", use relative file path
+	if r.options.LinkFormat == "" || r.options.LinkFormat == "relative" {
+		filename := r.dmcToFilename(dmc)
+		return filename
+	}
+
+	// Otherwise, use the LinkFormat as a URI scheme prefix
+	return r.options.LinkFormat + dmc
 }
 
 // dmRefToString converts a DMRef to a string representation
