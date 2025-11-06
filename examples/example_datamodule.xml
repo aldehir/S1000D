@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dmodule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://www.s1000d.org/S1000D_5-0/xml_schema_flat/descript.xsd">
+  <identAndStatusSection>
+    <dmAddress>
+      <dmIdent>
+        <dmCode modelIdentCode="MYAIRCRAFT" systemDiffCode="A" systemCode="00"
+                subSystemCode="0" subSubSystemCode="0" assyCode="00"
+                disassyCode="00" disassyCodeVariant="A" infoCode="040"
+                infoCodeVariant="A" itemLocationCode="D"/>
+        <issueInfo issueNumber="001" inWork="00"/>
+        <language languageIsoCode="en" countryIsoCode="US"/>
+      </dmIdent>
+      <dmAddressItems>
+        <issueDate year="2024" month="01" day="15"/>
+        <dmTitle>
+          <techName>Engine</techName>
+          <infoName>Description</infoName>
+        </dmTitle>
+      </dmAddressItems>
+    </dmAddress>
+    <dmStatus>
+      <security securityClassification="01"/>
+      <responsiblePartnerCompany enterpriseCode="12345">
+        Aerospace Manufacturing Inc.
+      </responsiblePartnerCompany>
+      <originator enterpriseCode="12345">
+        Engineering Department
+      </originator>
+      <qualityAssurance>
+        <unverified/>
+      </qualityAssurance>
+    </dmStatus>
+  </identAndStatusSection>
+  <content>
+    <description>
+      <levelledPara>
+        <title>General</title>
+        <para>This data module provides a description of the aircraft engine system.</para>
+        <levelledPara>
+          <title>Engine Components</title>
+          <para>The engine consists of the following major components:</para>
+          <para>1. Compressor section</para>
+          <para>2. Combustion chamber</para>
+          <para>3. Turbine section</para>
+          <para>4. Exhaust nozzle</para>
+        </levelledPara>
+        <levelledPara>
+          <title>Engine Specifications</title>
+          <para>Maximum thrust: 150 kN</para>
+          <para>Weight: 2,500 kg</para>
+          <para>Length: 4.2 m</para>
+        </levelledPara>
+      </levelledPara>
+    </description>
+  </content>
+</dmodule>

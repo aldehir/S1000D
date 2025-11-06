@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dmodule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://www.s1000d.org/S1000D_5-0/xml_schema_flat/proced.xsd">
+  <identAndStatusSection>
+    <dmAddress>
+      <dmIdent>
+        <dmCode modelIdentCode="MYAIRCRAFT" systemDiffCode="A" systemCode="72"
+                subSystemCode="1" subSubSystemCode="0" assyCode="00"
+                disassyCode="00" disassyCodeVariant="A" infoCode="520"
+                infoCodeVariant="A" itemLocationCode="C"/>
+        <issueInfo issueNumber="002" inWork="00"/>
+        <language languageIsoCode="en" countryIsoCode="US"/>
+      </dmIdent>
+      <dmAddressItems>
+        <issueDate year="2024" month="02" day="20"/>
+        <dmTitle>
+          <techName>Engine Oil System</techName>
+          <infoName>Oil Change Procedure</infoName>
+        </dmTitle>
+      </dmAddressItems>
+    </dmAddress>
+    <dmStatus>
+      <security securityClassification="01"/>
+      <responsiblePartnerCompany enterpriseCode="12345">
+        Aerospace Manufacturing Inc.
+      </responsiblePartnerCompany>
+      <qualityAssurance>
+        <firstVerification verificationType="tabtop"/>
+      </qualityAssurance>
+    </dmStatus>
+  </identAndStatusSection>
+  <content>
+    <procedure>
+      <mainProcedure>
+        <proceduralStep>
+          <para>Ensure the engine has been shut down for at least 30 minutes to allow oil to drain back to the sump.</para>
+        </proceduralStep>
+        <proceduralStep>
+          <para>Position a suitable container under the oil drain valve.</para>
+        </proceduralStep>
+        <proceduralStep>
+          <para>Open the oil drain valve and allow oil to drain completely.</para>
+        </proceduralStep>
+        <proceduralStep>
+          <para>Close the oil drain valve and ensure it is properly secured.</para>
+        </proceduralStep>
+        <proceduralStep>
+          <para>Remove and replace the oil filter element.</para>
+        </proceduralStep>
+        <proceduralStep>
+          <para>Add the specified quantity of approved engine oil through the oil filler port.</para>
+        </proceduralStep>
+        <proceduralStep>
+          <para>Check oil level using the dipstick and add oil as necessary to bring to the correct level.</para>
+        </proceduralStep>
+        <proceduralStep>
+          <para>Run the engine for 5 minutes and recheck the oil level.</para>
+        </proceduralStep>
+      </mainProcedure>
+    </procedure>
+  </content>
+</dmodule>

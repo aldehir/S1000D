@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://www.s1000d.org/S1000D_5-0/xml_schema_flat/pm.xsd">
+  <identAndStatusSection>
+    <pmAddress>
+      <pmIdent>
+        <pmCode modelIdentCode="MYAIRCRAFT" pmIssuer="12345" pmNumber="00001" pmVolume="01"/>
+        <issueInfo issueNumber="001" inWork="00"/>
+        <language languageIsoCode="en" countryIsoCode="US"/>
+      </pmIdent>
+      <pmAddressItems>
+        <issueDate year="2024" month="03" day="01"/>
+        <pmTitle>Aircraft Engine Maintenance Manual</pmTitle>
+      </pmAddressItems>
+    </pmAddress>
+    <pmStatus>
+      <security securityClassification="01"/>
+      <responsiblePartnerCompany enterpriseCode="12345">
+        Aerospace Manufacturing Inc.
+      </responsiblePartnerCompany>
+      <qualityAssurance>
+        <unverified/>
+      </qualityAssurance>
+    </pmStatus>
+  </identAndStatusSection>
+  <content>
+    <pmEntry>
+      <pmEntryTitle>Chapter 1 - General Information</pmEntryTitle>
+      <pmEntry>
+        <dmRef>
+          <dmRefIdent>
+            <dmCode modelIdentCode="MYAIRCRAFT" systemDiffCode="A" systemCode="00"
+                    subSystemCode="0" subSubSystemCode="0" assyCode="00"
+                    disassyCode="00" disassyCodeVariant="A" infoCode="040"
+                    infoCodeVariant="A" itemLocationCode="D"/>
+            <issueInfo issueNumber="001" inWork="00"/>
+          </dmRefIdent>
+        </dmRef>
+      </pmEntry>
+    </pmEntry>
+    <pmEntry>
+      <pmEntryTitle>Chapter 2 - Maintenance Procedures</pmEntryTitle>
+      <pmEntry>
+        <pmEntryTitle>Section 2.1 - Engine Oil System</pmEntryTitle>
+        <pmEntry>
+          <dmRef>
+            <dmRefIdent>
+              <dmCode modelIdentCode="MYAIRCRAFT" systemDiffCode="A" systemCode="72"
+                      subSystemCode="1" subSubSystemCode="0" assyCode="00"
+                      disassyCode="00" disassyCodeVariant="A" infoCode="520"
+                      infoCodeVariant="A" itemLocationCode="C"/>
+              <issueInfo issueNumber="002" inWork="00"/>
+            </dmRefIdent>
+          </dmRef>
+        </pmEntry>
+      </pmEntry>
+    </pmEntry>
+  </content>
+</pm>
